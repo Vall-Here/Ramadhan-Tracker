@@ -36,8 +36,8 @@ function Sheet({
           <motion.div
             initial={{ y: '100%' }} animate={{ y: 0 }} exit={{ y: '100%' }}
             transition={{ type: 'spring', damping: 30, stiffness: 350 }}
-            className="fixed bottom-0 left-0 right-0 z-50 bg-[--card] rounded-t-3xl shadow-xl max-h-[92dvh] overflow-y-auto"
-            style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
+            className="fixed bottom-0 left-0 right-0 z-50 rounded-t-3xl shadow-2xl max-h-[92dvh] overflow-y-auto"
+            style={{ backgroundColor: 'var(--card)', paddingBottom: 'env(safe-area-inset-bottom)' }}
           >
             <div className="flex justify-center pt-3 pb-1">
               <div className="w-10 h-1 rounded-full bg-[--muted-foreground]/30" />
