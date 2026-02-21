@@ -1,0 +1,83 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --background: oklch(0.99 0 0);
+  --foreground: oklch(0.15 0.02 250);
+  --card: oklch(0.99 0 0);
+  --card-foreground: oklch(0.15 0.02 250);
+  --popover: oklch(0.99 0 0);
+  --popover-foreground: oklch(0.15 0.02 250);
+  --primary: oklch(0.42 0.13 165);
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.93 0.03 165);
+  --secondary-foreground: oklch(0.25 0.06 165);
+  --muted: oklch(0.96 0.01 250);
+  --muted-foreground: oklch(0.52 0.02 250);
+  --accent: oklch(0.82 0.12 85);
+  --accent-foreground: oklch(0.22 0.06 85);
+  --destructive: oklch(0.55 0.22 25);
+  --destructive-foreground: oklch(0.99 0 0);
+  --border: oklch(0.91 0.01 250);
+  --input: oklch(0.91 0.01 250);
+  --ring: oklch(0.42 0.13 165);
+  --radius: 0.75rem;
+  --bottom-nav-height: 64px;
+}
+
+.dark {
+  --background: oklch(0.12 0.02 250);
+  --foreground: oklch(0.95 0.01 250);
+  --card: oklch(0.16 0.02 250);
+  --card-foreground: oklch(0.95 0.01 250);
+  --popover: oklch(0.16 0.02 250);
+  --popover-foreground: oklch(0.95 0.01 250);
+  --primary: oklch(0.57 0.14 165);
+  --primary-foreground: oklch(0.10 0.02 250);
+  --secondary: oklch(0.22 0.04 165);
+  --secondary-foreground: oklch(0.85 0.05 165);
+  --muted: oklch(0.22 0.02 250);
+  --muted-foreground: oklch(0.62 0.02 250);
+  --accent: oklch(0.75 0.12 85);
+  --accent-foreground: oklch(0.12 0.02 85);
+  --destructive: oklch(0.60 0.22 25);
+  --destructive-foreground: oklch(0.99 0 0);
+  --border: oklch(0.25 0.02 250);
+  --input: oklch(0.25 0.02 250);
+  --ring: oklch(0.57 0.14 165);
+}
+
+* {
+  border-color: var(--border);
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior: none;
+}
+
+/* Safe area for mobile */
+.safe-bottom {
+  padding-bottom: calc(env(safe-area-inset-bottom) + var(--bottom-nav-height));
+}
+
+/* Remove tap highlight on mobile */
+* { -webkit-tap-highlight-color: transparent; }
+
+/* Custom scrollbar */
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 9999px; }
+
+/* Arabic text font */
+.font-arabic {
+  font-family: 'Noto Naskh Arabic', 'Scheherazade New', 'Traditional Arabic', serif;
+  font-feature-settings: 'calt' 1;
+}
