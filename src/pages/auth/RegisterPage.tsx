@@ -76,7 +76,7 @@ export default function RegisterPage() {
     <div className="min-h-screen bg-gradient-to-b from-[--primary]/10 via-[--background] to-[--background] flex flex-col items-center justify-center p-5 max-w-md mx-auto">
       <div className="flex flex-col items-center mb-8 gap-3">
         <div className="w-16 h-16 rounded-2xl bg-[--primary] flex items-center justify-center shadow-lg shadow-[--primary]/25">
-          <Moon size={32} className="text-white" />
+          <Moon size={32} className="text-green" />
         </div>
         <div className="text-center">
           <h1 className="text-2xl font-bold">Ramadhan Tracker</h1>
