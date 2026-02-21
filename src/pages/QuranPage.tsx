@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ArrowLeft, Search, Play, Pause, Volume2, BookOpen, Loader2, StopCircle, ListMusic } from 'lucide-react'
+import { ArrowLeft, Search, Play, Pause, BookOpen, Loader2, StopCircle, ListMusic } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useSurahList, useSurahDetail, type Surah } from '@/hooks/useQuran'
 import { AppLayout } from '@/components/layout/AppLayout'

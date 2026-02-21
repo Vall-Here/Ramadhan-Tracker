@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase'
 import { useAuthStore } from '@/stores/authStore'
 import { ProtectedRoute } from '@/components/layout/ProtectedRoute'
+import { InstallPrompt } from '@/components/InstallPrompt'
 
 // Lazy-load pages for code splitting
 const LoginPage = lazy(() => import('@/pages/auth/LoginPage'))
@@ -72,6 +73,7 @@ export default function App() {
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </Suspense>
+        <InstallPrompt />
       </BrowserRouter>
     </QueryClientProvider>
   )
