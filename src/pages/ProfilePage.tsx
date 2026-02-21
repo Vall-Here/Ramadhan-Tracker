@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { LogOut, User, Bell, Shield, ChevronRight, Moon, Sun, X, Eye, EyeOff, Award, Edit3, Target, Check } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
+import type { User as SupabaseUser } from '@supabase/supabase-js'
 import { useAuthStore } from '@/stores/authStore'
 import { supabase } from '@/lib/supabase'
 import { AppLayout } from '@/components/layout/AppLayout'
@@ -295,7 +296,7 @@ export default function ProfilePage() {
 // ── Edit Profil Sheet ─────────────────────────────────────────────────────────
 function EditProfileSheet({ open, onClose, user, profile, onSaved }: {
   open: boolean; onClose: () => void
-  user: ReturnType<typeof useAuthStore>['user']
+  user: SupabaseUser | null
   profile: UserProfile | null
   onSaved: (city: string) => void
 }) {
@@ -475,7 +476,7 @@ function ChangePasswordSheet({ open, onClose }: { open: boolean; onClose: () => 
 // ── Sessions Sheet ────────────────────────────────────────────────────────────
 function SessionsSheet({ open, onClose, user }: {
   open: boolean; onClose: () => void
-  user: ReturnType<typeof useAuthStore>['user']
+  user: SupabaseUser | null
 }) {
   const [logs, setLogs] = useState<{ id: string; event_type: string; created_at: string }[]>([])
 

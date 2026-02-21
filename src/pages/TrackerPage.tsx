@@ -127,7 +127,7 @@ export default function TrackerPage() {
   async function handleSave() {
     if (!user) return
     setSaved(false)
-    const upserts: Promise<unknown>[] = []
+    const upserts: PromiseLike<unknown>[] = []
 
     // Save prayer logs
     const prayerRows = Object.entries(prayerStatuses)
