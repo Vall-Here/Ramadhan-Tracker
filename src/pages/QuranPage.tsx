@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ArrowLeft, Search, Play, Pause, Volume2, BookOpen, Loader2 } from 'lucide-react'
+import { ArrowLeft, Search, Play, Pause, Volume2, BookOpen, Loader2, StopCircle, ListMusic } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useSurahList, useSurahDetail, type Surah } from '@/hooks/useQuran'
 import { AppLayout } from '@/components/layout/AppLayout'
@@ -112,18 +112,25 @@ function SurahReader({
   const navigate = useNavigate()
   const { data, isLoading, isError } = useSurahDetail(surahNumber)
   const [playingAyah, setPlayingAyah] = useState<number | null>(null)
+  const [isPlayingAll, setIsPlayingAll] = useState(false)
   const audioRef = useRef<HTMLAudioElement | null>(null)
+  const playAllActiveRef = useRef(false)
 
+  // ── Stop everything ─────────────────────────────────────────────────────
+  const stopAll = useCallback(() => {
+    playAllActiveRef.current = false
+    if (audioRef.current) { audioRef.current.pause(); audioRef.current.src = '' }
+    setPlayingAyah(null)
+    setIsPlayingAll(false)
+  }, [])
+
+  // ── Play a single ayah (toggle) ──────────────────────────────────────────
   const playAyah = useCallback(
     (globalNumber: number, url: string) => {
-      if (audioRef.current) {
-        audioRef.current.pause()
-        audioRef.current.src = ''
-      }
-      if (playingAyah === globalNumber) {
-        setPlayingAyah(null)
-        return
-      }
+      playAllActiveRef.current = false
+      setIsPlayingAll(false)
+      if (audioRef.current) { audioRef.current.pause(); audioRef.current.src = '' }
+      if (playingAyah === globalNumber) { setPlayingAyah(null); return }
       const audio = new Audio(url)
       audioRef.current = audio
       audio.play().catch(() => {})
@@ -138,9 +145,38 @@ function SurahReader({
     setPlayingAyah(null)
   }, [])
 
+  // ── Play all sequentially ────────────────────────────────────────────────
+  const playFromIndex = useCallback(
+    (idx: number) => {
+      if (!playAllActiveRef.current || !data) return
+      if (idx >= data.ayahs.length) {
+        playAllActiveRef.current = false
+        setPlayingAyah(null)
+        setIsPlayingAll(false)
+        return
+      }
+      const ayah = data.ayahs[idx]
+      if (!ayah.audio) { playFromIndex(idx + 1); return }
+      const audio = new Audio(ayah.audio)
+      audioRef.current = audio
+      setPlayingAyah(ayah.number)
+      audio.play().catch(() => { playFromIndex(idx + 1) })
+      audio.onended = () => playFromIndex(idx + 1)
+    },
+    [data]
+  )
+
+  const startPlayAll = useCallback(() => {
+    stopAll()
+    setIsPlayingAll(true)
+    playAllActiveRef.current = true
+    setTimeout(() => playFromIndex(0), 0)
+  }, [stopAll, playFromIndex])
+
   // stop audio on unmount
   useEffect(() => {
     return () => {
+      playAllActiveRef.current = false
       audioRef.current?.pause()
     }
   }, [])
@@ -190,7 +226,24 @@ function SurahReader({
               {data.revelationType === 'Meccan' ? 'Makkiyyah' : 'Madaniyyah'}
             </p>
           </div>
-          <Volume2 size={16} className="text-[--muted-foreground] shrink-0" />
+          {/* Play All / Stop */}
+          {isPlayingAll ? (
+            <button
+              onClick={stopAll}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[--destructive]/10 text-[--destructive] text-xs font-semibold hover:bg-[--destructive]/20 transition-colors shrink-0"
+            >
+              <StopCircle size={14} />
+              Stop
+            </button>
+          ) : (
+            <button
+              onClick={startPlayAll}
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[--primary]/10 text-[--primary] text-xs font-semibold hover:bg-[--primary]/20 transition-colors shrink-0"
+            >
+              <ListMusic size={14} />
+              Play All
+            </button>
+          )}
         </div>
 
         {/* Mark to tracker button */}

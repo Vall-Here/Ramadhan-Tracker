@@ -49,7 +49,7 @@ function Sheet({
                 <X size={16} />
               </button>
             </div>
-            <div className="px-5 py-5">{children}</div>
+            <div className="px-5 pt-5" style={{ paddingBottom: 'calc(env(safe-area-inset-bottom) + var(--bottom-nav-height) + 1.25rem)' }}>{children}</div>
           </motion.div>
         </>
       )}

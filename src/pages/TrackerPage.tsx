@@ -454,7 +454,7 @@ export default function TrackerPage() {
         </div>
 
         {/* Save button (sticky bottom above nav) */}
-        <div className="sticky bottom-[64px] left-0 right-0 px-5 pb-4 bg-gradient-to-t from-[--background] via-[--background]/80 to-transparent pt-4">
+        <div className="sticky bottom-[64px] left-0 right-0 px-5 pb-4 bg-gradient-to-t from-background via-background to-background/95 to-transparent pt-4">
           <Button className="w-full h-12 text-base shadow-lg" onClick={handleSave}>
             {saved ? '✓ Tersimpan!' : 'Simpan Ibadah Hari Ini'}
           </Button>
